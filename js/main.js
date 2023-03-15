@@ -1,7 +1,6 @@
 let eventBus = new Vue()
 
 Vue.component('component', {
-    // колонки
     template: `
  
         <div class="columns">
@@ -247,6 +246,36 @@ Vue.component('column_2', {
     }
 })
 
+Vue.component('column_3', {
+    template: `
+        <section id="main" class="main-alt">
+            <div class="column 3">
+            <p>Завершено</p>
+                <div v-for="card in column_3">
+                <h3>{{ card.name }}</h3>
+                    <ul v-for="task in card.points"
+                        v-if="task.name != null"
+                        @click="TaskCompleted(card, task)"
+                        :class="{completed: task.completed}">
+                        <li>
+                        {{ task.name }}
+                        </li>
+                    </ul><br>
+                    
+                        <p>{{ card.date }}</p>
+                </div>
+            </div>
+        </section>
+    `,
+    props: {
+        column_3: {
+            type: Array,
+        },
+        card: {
+            type: Object,
+        },
+    }
+})
 
 
 let app = new Vue({
