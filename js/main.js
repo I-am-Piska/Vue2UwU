@@ -149,7 +149,7 @@ Vue.component('column_1', {
             
                 <div v-for="card in column_1">
                 <h3>{{ card.name }}</h3>
-                    <ul v-for="task in card.points"
+                    <ul class="tasks" v-for="task in card.points"
                         v-if="task.name != null"
                         @click="TaskCompleted(card, task)"
                         :class="{completed: task.completed}">
@@ -204,7 +204,7 @@ Vue.component('column_2', {
             
                 <div v-for="card in column_2">
                 <h3>{{ card.name }}</h3>
-                    <ul v-for="task in card.points"
+                    <ul class="tasks" v-for="task in card.points"
                         v-if="task.name != null"
                         @click="TaskCompleted(card, task)"
                         :class="{completed: task.completed}">
@@ -253,7 +253,7 @@ Vue.component('column_3', {
             <p>Завершено</p>
                 <div v-for="card in column_3">
                 <h3>{{ card.name }}</h3>
-                    <ul v-for="task in card.points"
+                    <ul class="tasks" v-for="task in card.points"
                         v-if="task.name != null"
                         @click="TaskCompleted(card, task)"
                         :class="{completed: task.completed}">
