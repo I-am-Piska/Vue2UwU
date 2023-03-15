@@ -2,10 +2,10 @@ let eventBus = new Vue()
 
 Vue.component('component', {
     template: `
- 
+
         <div class="columns">
             <newCard></newCard>
-         
+
             <column_1 :column_1="column_1"></column_1>
             <column_2 :column_2="column_2"></column_2>
             <column_3 :column_3="column_3"></column_3>
@@ -21,16 +21,28 @@ Vue.component('component', {
         }
 
     },
+    methods:{
+        localSaveFirstColumn(){
+            localStorage.setItem('column_1', JSON.stringify(this.column_1));
+        },
+        localSaveSecondColumn(){
+            localStorage.setItem('column_2', JSON.stringify(this.column_2));
+        },
+        localSaveThirdColumn(){
+            localStorage.setItem('column_3', JSON.stringify(this.column_3));
+        },
+    },
     mounted() {
         this.column_1 = JSON.parse(localStorage.getItem('column_1')) || [];
         this.column_2 = JSON.parse(localStorage.getItem('column_2')) || [];
         this.column_3 = JSON.parse(localStorage.getItem('column_3')) || [];
+
         eventBus.$on('addColumn_1', ColumnCard => {
 
             if (this.column_1.length < 3) {
                 this.errors.length = 0
                 this.column_1.push(ColumnCard)
-                this.saveColumn_1();
+                this.localSaveFirstColumn()
             } else {
                 this.errors.length = 0
                 this.errors.push()
@@ -41,8 +53,7 @@ Vue.component('component', {
                 this.errors.length = 0
                 this.column_2.push(ColumnCard)
                 this.column_1.splice(this.column_1.indexOf(ColumnCard), 1)
-                this.saveColumn_1();
-                this.saveColumn_2();
+                this.localSaveSecondColumn();
             } else {
                 this.errors.length = 0
                 this.errors.push()
@@ -51,46 +62,45 @@ Vue.component('component', {
         eventBus.$on('addColumn_3', ColumnCard => {
             this.column_3.push(ColumnCard)
             this.column_2.splice(this.column_2.indexOf(ColumnCard), 1)
-            this.saveColumn_2();
-            this.saveColumn_3();
+            this.localSaveThirdColumn();
 
         })
     },
-
-    methods: {
-        saveColumn_1(){
-            localStorage.setItem('column_1', JSON.stringify(this.column_1));
+    watch: {
+        column_1(newValue) {
+            localStorage.setItem("column_1", JSON.stringify(newValue));
         },
-        saveColumn_2(){
-            localStorage.setItem('column_2', JSON.stringify(this.column_2));
+        column_2(newValue) {
+            localStorage.setItem("column_2", JSON.stringify(newValue));
         },
-        saveColumn_3(){
-            localStorage.setItem('column_3', JSON.stringify(this.column_3));
+        column_3(newValue) {
+            localStorage.setItem("column_3", JSON.stringify(newValue));
         }
-    }
+    },
+
 })
 
 Vue.component('newCard', {
     template: `
     <section id="main" class="main-alt">
-    
+
         <form @submit.prevent="Submit">
-        
+
         <div class="text">
             <h2>Запишите что нибудь</h2>
-        </div>    
-            
+        </div>
+
         <div class="form_control">
-                
+
             <div class="form_name">
                 <input required type="text" v-model="name" id="name" placeholder="Введите название заметки"/>
             </div>
-            
+
             <input required type="text"  v-model="point_1" placeholder="Первый"/>
             <br>
             <input required type="text"  v-model="point_2" placeholder="Второй"/>
             <br>
-            <input required type="text"  v-model="point_3" placeholder="Третий"/> 
+            <input required type="text"  v-model="point_3" placeholder="Третий"/>
             <br>
             <input  type="text"  v-model="point_4"  placeholder="Четвертый"/>
             <br>
@@ -146,7 +156,7 @@ Vue.component('column_1', {
         <section id="main" class="main-alt">
             <div class="column 1">
             <p>Начало</p>
-            
+
                 <div v-for="card in column_1">
                 <h3>{{ card.name }}</h3>
                     <ul class="tasks" v-for="task in card.points"
@@ -157,7 +167,7 @@ Vue.component('column_1', {
                         {{ task.name }}
                         </p>
                     </ul>
-                    
+
                 </div>
             </div>
         </section>
@@ -201,7 +211,7 @@ Vue.component('column_2', {
         <section id="main" class="main-alt">
             <div class="column 2">
             <p>Ваш прогресс</p>
-            
+
                 <div v-for="card in column_2">
                 <h3>{{ card.name }}</h3>
                     <ul class="tasks" v-for="task in card.points"
@@ -261,7 +271,7 @@ Vue.component('column_3', {
                         {{ task.name }}
                         </li>
                     </ul><br>
-                    
+
                         <p>{{ card.date }}</p>
                 </div>
             </div>
