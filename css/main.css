@@ -69,3 +69,7 @@ body>div>h1{
 .completed{
     text-decoration: line-through;
 }
+
+.disabled {
+    pointer-events: none;
+  }

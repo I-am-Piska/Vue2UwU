@@ -6,7 +6,8 @@ Vue.component('component', {
         <div class="columns">
             <newCard></newCard>
 
-            <column_1 :column_1="column_1"></column_1>
+            <column_1 :column_1="column_1" v-if="column_2.length !== 5"></column_1>
+            <column_1 :column_1="column_1" v-if="column_2.length === 5" class="disabled"></column_1>
             <column_2 :column_2="column_2"></column_2>
             <column_3 :column_3="column_3"></column_3>
         </div>
