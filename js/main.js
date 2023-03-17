@@ -154,32 +154,24 @@ Vue.component('newCard', {
 
 Vue.component('column_1', {
     template: `
-        <section id="main" class="main-alt">
-            <div class="column 1">
-            <p>Начало</p>
+    <section id="main" class="main-alt">
+    <div class="column 1">
+    <p>Начало</p>
 
-                <div v-for="card in column_1">
-                <h3>{{ card.name }}</h3>
-                    <ul class="tasks" v-for="task in card.points"
-                        v-if="task.name != null"
-                        @click="TaskCompleted(card, task)"
-                        :class="{completed: task.completed}">
-                        <p>
-                        {{ task.name }}
-                        </p>
-                    </ul>
-                    <li v-if="tab.editButton === true">
-                            <form @submit.prevent="updateTab(tab)">
-                                <label for="title">Новый заголовок</label>
-                                <input id="title" type="text" v-model="tab.title" maxlength="30" placeholder="Заголовок">
-                                <label for="description">Новое описание:</label> 
-                                <textarea id="description" v-model="tab.description" cols="20" rows="5"></textarea>
-                                <input type="submit" value="Редактировать">
-                            </form>                      
-                        </li>
-                </div>
-            </div>
-        </section>
+        <div v-for="card in column_1">
+        <h3>{{ card.name }}</h3>
+            <ul class="tasks" v-for="task in card.points"
+                v-if="task.name != null"
+                @click="TaskCompleted(card, task)"
+                :class="{completed: task.completed}">
+                <p>
+                {{ task.name }}
+                </p>
+            </ul>
+
+        </div>
+    </div>
+</section>
     `,
     props: {
         column_1: {
