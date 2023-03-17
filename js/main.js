@@ -167,7 +167,15 @@ Vue.component('column_1', {
                         {{ task.name }}
                         </p>
                     </ul>
-
+                    <li v-if="tab.editButton === true">
+                            <form @submit.prevent="updateTab(tab)">
+                                <label for="title">Новый заголовок</label>
+                                <input id="title" type="text" v-model="tab.title" maxlength="30" placeholder="Заголовок">
+                                <label for="description">Новое описание:</label> 
+                                <textarea id="description" v-model="tab.description" cols="20" rows="5"></textarea>
+                                <input type="submit" value="Редактировать">
+                            </form>                      
+                        </li>
                 </div>
             </div>
         </section>
